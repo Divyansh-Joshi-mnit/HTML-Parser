@@ -88,7 +88,7 @@ void parser_free(Parser* parser) {
 
 DomNode* parse(Parser* parser) {
     // Create a dummy root node for the document
-    DomNode* root = create_element_node("#document");
+    DomNode* root = create_element_node("<!Doctype html>");
     
     // Parse all top-level nodes as children of the root
     root->first_child = parse_children(parser);
@@ -111,12 +111,12 @@ static void parser_error(Parser* parser, const char* message) {
     // Format a detailed error message
     char buffer[512];
     snprintf(buffer, sizeof(buffer), "[Line %d, Col %d] Error: %s. (Got token %d: '%s')",
-             parser->current_token.line,
-             parser->current_token.col,
-             message,
-             parser->current_token.type,
-             parser->current_token.lexeme);
-             
+            parser->current_token.line,
+            parser->current_token.col,
+            message,
+            parser->current_token.type,
+            parser->current_token.lexeme);
+            
     parser->error_message = safe_strdup(buffer);
 }
 
@@ -276,7 +276,7 @@ static DomNode* parse_element(Parser* parser) {
             if (strcmp(parser->current_token.lexeme, node->tag_name) != 0) {
                 char msg[256];
                 snprintf(msg, sizeof(msg), "Mismatched tag. Expected </%s> but got </%s>",
-                         node->tag_name, parser->current_token.lexeme);
+                        node->tag_name, parser->current_token.lexeme);
                 parser_error(parser, msg);
                 return node; // Return node, error is flagged
             }

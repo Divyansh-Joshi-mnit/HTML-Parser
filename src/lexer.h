@@ -39,6 +39,7 @@ typedef struct {
     int current;        // Current position in the source
     int line;
     int col;
+    int insideTag;
 } Lexer;
 
 // --- Public Lexer Functions ---

@@ -6,6 +6,7 @@
 #include "dom.h"
 #include "utils.h" // For safe_malloc and safe_strdup
 #include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -137,7 +138,7 @@ void print_dom_tree(DomNode* root, int indent) {
 
     if (root->type == ELEMENT_NODE) {
         // Print tag name
-        printf("<%s", root->tag_name);
+        printf("|-<%s", root->tag_name);
         
         // Print attributes
         Attribute* attr = root->attributes;
@@ -146,7 +147,7 @@ void print_dom_tree(DomNode* root, int indent) {
             attr = attr->next;
         }
         printf(">\n");
-
+        sleep(1);
         // --- 2. Recursively print children ---
         DomNode* child = root->first_child;
         while (child != NULL) {
@@ -156,7 +157,7 @@ void print_dom_tree(DomNode* root, int indent) {
 
     } else if (root->type == TEXT_NODE) {
         // Print text content, escaped
-        printf("TEXT: \"%s\"\n", root->text_content);
+        printf("|-TEXT: %s\n", root->text_content);
     }
 
     // --- 3. Recursively print siblings (handled by the parent's loop) ---

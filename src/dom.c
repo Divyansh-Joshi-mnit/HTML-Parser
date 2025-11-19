@@ -118,6 +118,5 @@ void print_dom_tree(DomNode* root, int indent) {
     } else if (root->type == TEXT_NODE) {
         printf("|-TEXT: %s\n", root->text_content);
     }
-
-    // --- 3. Recursively print siblings (handled by the parent's loop) ---
 }
+
